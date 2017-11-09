@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DemoIPC</string>
+    <string name="app_name">customBinder</string>
     <string name="btn_bind">Bind</string>
     <string name="btn_unbind">Unbind</string>
     <string name="btn_activity3">Activity 3</string>

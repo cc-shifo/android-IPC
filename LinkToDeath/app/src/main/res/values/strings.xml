@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">linkToDeath</string>
+    <string name="btn_bind">Bind</string>
+    <string name="btn_unbind">Unbind</string>
+    <string name="btn_getBooks">get</string>
+    <string name="btn_addBook">add</string>
+</resources>
