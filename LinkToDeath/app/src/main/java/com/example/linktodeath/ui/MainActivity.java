@@ -1,4 +1,4 @@
-package com.example.linktodeath.ui;
+﻿package com.example.linktodeath.ui;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         // 好像是说当挂在着service的进程挂掉等典型情况，回调才被调用。估计调用stopService()后可以被调用到。
         @Override
         public void onServiceDisconnected(ComponentName name) {
+            unbindService(mConn);
             mBookManager = null;
             Log.d(TAG, "disconnected");
         }
@@ -76,8 +77,12 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "binder Died. thread name: " + Thread.currentThread().getName());
             if (mBookManager == null)
                 return;
-            unbindService(mConn);
+            // 服务端进程被kill了之后，如果没有进行unlinkToDeath()操作，binderDied()
+            // 会一直被调用。
+            // 服务端进程被kill了之后，如果没有进行unbindService()操作，
+            // onServiceDisconnected()一直会被调用
             mBookManager.asBinder().unlinkToDeath(mDeathRecipient, 0);
+            unbindService(mConn);
             mBookManager = null;
         }
     };
