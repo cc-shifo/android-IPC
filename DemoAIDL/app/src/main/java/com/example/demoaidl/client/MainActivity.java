@@ -4,7 +4,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
+import android.os.Process;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,8 +16,11 @@ import android.view.View;
 
 import com.example.demoaidl.R;
 import com.example.demoaidl.aidl.Book;
+import com.example.demoaidl.aidl.IBookArrivedListener;
 import com.example.demoaidl.aidl.IBookManager;
 import com.example.demoaidl.server.BookManagerService;
+import com.example.demoaidl.utils.MyConstants;
+import com.example.demoaidl.utils.MyUtils;
 
 import java.util.List;
 
@@ -128,4 +134,32 @@ public class MainActivity extends AppCompatActivity {
             mRemoteBookManager = null;
         }
     }
+
+    /**
+     * Observer: listener to book arrived
+     *
+     * Server call this method through Binder.
+     * */
+    private IBookArrivedListener listener = new IBookArrivedListener.Stub() {
+        @Override
+        public void bookArrived(Book newBook) throws RemoteException {
+            Log.d(TAG, "new book Arrived on pid: " + Process.myPid());
+            mNewBookHandler.obtainMessage(MyConstants.MSG_BOOK_ARRIVED, newBook)
+                    .sendToTarget();
+        }
+    };
+
+    private Handler mNewBookHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MyConstants.MSG_BOOK_ARRIVED:
+                    Log.d(TAG, "handleMessage: 新书到了" + msg.obj);
+                    Log.d(TAG, "new book Arrived on pid: " + Process.myPid());
+                    break;
+                default:
+                    super.handleMessage(msg);
+            }
+        }
+    };
 }
