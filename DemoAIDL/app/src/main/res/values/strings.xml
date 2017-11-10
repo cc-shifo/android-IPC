@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">DemoAIDL</string>
+    <string name="btn_bind">Bind</string>
+    <string name="btn_unbind">Unbind</string>
+    <string name="btn_get_books">Get</string>
+    <string name="btn_add_book">Add</string>
+</resources>

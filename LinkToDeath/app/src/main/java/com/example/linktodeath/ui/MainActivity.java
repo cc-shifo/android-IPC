@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         // 好像是说当挂在着service的进程挂掉等典型情况，回调才被调用。估计调用stopService()后可以被调用到。
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            unbindService(mConn);
             mBookManager = null;
             Log.d(TAG, "disconnected");
         }
