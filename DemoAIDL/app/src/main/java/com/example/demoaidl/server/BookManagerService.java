@@ -1,4 +1,4 @@
-package com.example.demoaidl.server;
+﻿package com.example.demoaidl.server;
 
 import android.app.Service;
 import android.content.Intent;
@@ -36,8 +36,6 @@ public class BookManagerService extends Service {
     }
 
     // 服务端执行
-//    private Binder mBinder = new IBookManager
-
     private Binder mBinder = new IBookManager.Stub() {
         @Override
         public List<Book> getListBook() throws RemoteException {
