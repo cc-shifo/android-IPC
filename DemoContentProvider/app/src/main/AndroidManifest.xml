@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.democontentprovider">
 
+    <permission android:name="com.example.democontentprovider.ACCESS_PROVIDER" />
+
+    <uses-permission android:name="com.example.democontentprovider.ACCESS_PROVIDER" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -18,11 +23,12 @@
             </intent-filter>
         </activity>
 
+        <!--android:authorities该属性可自定义字符串内容。-->
         <provider
-            android:authorities="com.example.democontentprovider.BookContentProvider"
+            android:authorities="com.example.democontentprovider"
             android:name=".BookContentProvider"
             android:permission="com.example.democontentprovider.ACCESS_PROVIDER"
-            android:process=":remote"
+            android:process=":provider"
             android:enabled="true"
             android:exported="true"
             />

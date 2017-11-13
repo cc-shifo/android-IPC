@@ -26,16 +26,19 @@ public class ProviderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_provider);
 
-        // 来自android:android:authorities
-        Uri uri = Uri.parse("content://com.example.democontentprovider.BookContentProvider");
+        /** uri中的authorities值来自android:android:authorities，其值可自定义。
+         * 如果想在path处使用*号，那么ContentProvider的CRUD函数必须能解析星号，例如getTableName()必须能
+         * 返回正确的表明，否则在这个带星号的uri上的CRUD操作都会抛出“不支持的uri异常”，说明uri出错了。
+         */
+        // Uri uri = Uri.parse("content://com.example.provider/*");
+        Uri uri = Uri.parse("content://com.example.democontentprovider/book");
         ContentResolver resolver = getContentResolver();
         resolver.query(uri, null, null, null, null);
         resolver.query(uri, null, null, null, null);
         resolver.query(uri, null, null, null, null);
 
         // 插入数据
-        Uri uriBook = Uri.parse("content://com.example.democontentprovider" +
-                ".BookContentProvider/book");
+        Uri uriBook = Uri.parse("content://com.example.democontentprovider/book");
         ContentValues values = new ContentValues();
         values.put("_id", 6);
         values.put("name", "硅谷科技史100年");
@@ -55,8 +58,7 @@ public class ProviderActivity extends AppCompatActivity {
 
 
 
-        Uri uriUser = Uri.parse("content://com.example.democontentprovider" +
-                ".BookContentProvider/user");
+        Uri uriUser = Uri.parse("content://com.example.democontentprovider/user");
         cursor = resolver.query(uriUser, new String[]{"_id", "name", "sex"},
                 null, null, null);
         if (cursor != null) {

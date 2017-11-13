@@ -19,8 +19,8 @@ import android.util.Log;
 public class BookContentProvider extends ContentProvider {
     private static final String TAG = "BookContentProvider";
 
-    // 创建matcher
-    private static final String AUTHORITY = "com.example.democontentprovider.BookContentProvider";
+    // 创建matcher，AUTHORITY来自manifest的android:authorities属性，该属性可自定义。
+    private static final String AUTHORITY = "com.example.democontentprovider";
     private static final String TABLE_BOOK = "book";
     private static final String TABLE_USER = "user";
     public static final int BOOK_URI_CODE = 0;
@@ -65,6 +65,12 @@ public class BookContentProvider extends ContentProvider {
         Log.d(TAG, "onCreate: on thread: " + Thread.currentThread().getName());
         Log.d(TAG, "onCreate: on thread: " + Thread.currentThread().getId());
         mContext = getContext();
+        /**
+         * 不应该在这里进行数据库操作的，因为onCreate是在main线程中运行的。可以把数据库的初始化放在
+         * Application中吧。在这为了demo的简单，所以就这么的写了。
+         * 所有CRUD操作都运行在provider端的binder线程池中，每一个操作一个线程，可以从query和inster
+         * 的打印看出来。
+         * */
         initProviderData();
 
         return true;
