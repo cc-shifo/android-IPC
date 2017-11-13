@@ -23,6 +23,8 @@
             android:name=".BookContentProvider"
             android:permission="com.example.democontentprovider.ACCESS_PROVIDER"
             android:process=":remote"
+            android:enabled="true"
+            android:exported="true"
             />
     </application>
 
